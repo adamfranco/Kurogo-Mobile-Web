@@ -29,6 +29,13 @@ class Watchdog {
             
             $this->kurogoPathDirs = array($rootDir);
             
+            if (defined('COMMON_DIR')) {
+				$commonDir = realpath(COMMON_DIR).DIRECTORY_SEPARATOR;
+				if (strncmp($commonDir, $rootDir, strlen($rootDir)) != 0) {
+					$this->kurogoPathDirs[] = $commonDir;
+				}
+			}
+            
             $siteDir = realpath(SITE_DIR).DIRECTORY_SEPARATOR;
             if (strncmp($siteDir, $rootDir, strlen($rootDir)) != 0) {
                 $this->kurogoPathDirs[] = $siteDir;

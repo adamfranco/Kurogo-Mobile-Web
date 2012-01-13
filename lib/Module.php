@@ -112,6 +112,8 @@ abstract class Module
         $modulePaths = array(
           SITE_MODULES_DIR."/$id/Site%s.php"=>"Site%s",
           SITE_MODULES_DIR."/$id/%s.php"=>"%s",
+          COMMON_DIR."/app/modules/$id/Site%s.php"=>"Site%s",
+          COMMON_DIR."/app/modules/$id/%s.php"=>"%s",
           MODULES_DIR."/$id/%s.php"=>"%s",
         );
         
@@ -618,7 +620,9 @@ abstract class Module
                 'common'=>sprintf("%s/common/config/admin-module.json", APP_DIR),
                 'module'=>sprintf("%s/%s/config/admin-module.json", MODULES_DIR, $this->id),
                 'sitecommon'=>sprintf("%s/common/config/admin-module.json", SITE_APP_DIR),
-                'sitemodule'=>sprintf("%s/%s/config/admin-module.json", SITE_MODULES_DIR, $this->id)
+                'sitemodule'=>sprintf("%s/%s/config/admin-module.json", SITE_MODULES_DIR, $this->id),
+                'sitecommon'=>sprintf("%s/app/common/config/admin-module.json", COMMON_DIR),
+                'sitemodule'=>sprintf("%s/app/modules/%s/config/admin-module.json", COMMON_DIR, $this->id),
             );
 
             foreach ($files as $type=>$file) {                
@@ -642,9 +646,11 @@ abstract class Module
     private function getStringsForLanguage($lang) {
         $stringFiles = array(
             APP_DIR . "/common/strings/".$lang . '.ini',
+            COMMON_DIR . "app/common/strings/".$lang . '.ini',
             SITE_APP_DIR . "/common/strings/".$lang . '.ini',
             MODULES_DIR . '/' . $this->id ."/strings/".$lang . '.ini',
-            SITE_MODULES_DIR . '/' . $this->id ."/strings/".$lang . '.ini'
+            COMMON_DIR . '/app/modules/' . $this->id ."/strings/".$lang . '.ini',
+            SITE_MODULES_DIR . '/' . $this->id ."/strings/".$lang . '.ini',
         );
         
         $strings = array();

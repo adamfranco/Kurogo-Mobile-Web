@@ -367,7 +367,7 @@ abstract class AuthenticationAuthority
     public static function getInstalledAuthentiationAuthorities()
     {
         $dirs = array(
-            LIB_DIR . '/Authentication', SITE_DIR . '/lib/Authentication'
+            LIB_DIR . '/Authentication', COMMON_DIR . '/lib/Authentication', SITE_DIR . '/lib/Authentication'
         );
         
         $authorities = array();

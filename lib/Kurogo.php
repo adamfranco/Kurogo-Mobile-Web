@@ -105,7 +105,7 @@ class Kurogo
         }
         $found = false;
         
-        $dirs = array(LIB_DIR . "/$packageName");
+        $dirs = array(LIB_DIR . "/$packageName", COMMON_DIR.'/lib/'.$packageName);
         if (defined('SITE_LIB_DIR')) {  
             $dirs[] = SITE_LIB_DIR . "/$packageName";
         }
@@ -147,6 +147,7 @@ class Kurogo
         // If the className has Module in it then use the modules dir
         if (defined('MODULES_DIR') && preg_match("/(.*)(Web|API)Module/", $className, $bits)) {
             $paths[] = MODULES_DIR . '/' . strtolower($bits[1]);
+            $paths[] = COMMON_DIR . '/app/modules/' . strtolower($bits[1]);
         }
         
         // use the site lib dir if it's been defined
@@ -154,6 +155,7 @@ class Kurogo
             $paths[] = SITE_LIB_DIR;
         }
         
+		$paths[] = COMMON_DIR . '/lib/';        
         $paths[] = LIB_DIR;
         
         self::log(LOG_DEBUG, "Autoloader loading $className", "autoLoader"); 
@@ -362,6 +364,7 @@ class Kurogo
         define('MASTER_CONFIG_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'config');
         define('APP_DIR',           ROOT_DIR . DIRECTORY_SEPARATOR . 'app');
         define('MODULES_DIR',       APP_DIR  . DIRECTORY_SEPARATOR . 'modules');
+        define('COMMON_DIR',           ROOT_DIR . DIRECTORY_SEPARATOR . 'site' . DIRECTORY_SEPARATOR . 'common');
         define('MIN_FILE_PREFIX',  'file:');
         define('API_URL_PREFIX',   'rest');
         

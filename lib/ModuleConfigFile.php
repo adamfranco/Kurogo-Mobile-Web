@@ -31,6 +31,7 @@ class ModuleConfigFile extends ConfigFile {
         if (preg_match("/-default$/", $type)) {
             $files = array( 
                 sprintf('%s/%s/config/%s.ini', SITE_MODULES_DIR, $id, $type),
+                sprintf('%s/app/modules/%s/config/%s.ini', COMMON_DIR, $id, $type),
                 sprintf('%s/%s/config/%s.ini', MODULES_DIR, $id, $type),
                 sprintf('%s/common/config/%s.ini', APP_DIR, $type)
             );
@@ -43,10 +44,16 @@ class ModuleConfigFile extends ConfigFile {
             
             throw new KurogoConfigurationException("Unable to find $type config file for module $id");
         } else {
-            $file = sprintf('%s/%s/%s.ini', SITE_CONFIG_DIR, $id, $type);
+        	$files = array( 
+                sprintf('%s/%s/%s.ini', SITE_CONFIG_DIR, $id, $type),
+                sprintf('%s/config/%s/%s.ini', COMMON_DIR, $id, $type),
+            );
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    return $file;
+                }
+            }
         }
-        
-        return $file;
     }
     
 
